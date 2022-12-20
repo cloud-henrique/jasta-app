@@ -4,29 +4,27 @@ export default {
   ...common,
 
   colors: {
-    BACKGROUND: '#383B43',
-
-    PRIMARY: '#00B37E',
-    PRIMARY_LIGHT: '#36B37E',
-    PRIMARY_DARK: '#006644',
-
-    SUCCESS: '#00875A',
-    SUCCESS_LIGHT: '#36B37E',
-    SUCCESS_DARK: '#006644',
-
-    WARNING: '#FFAB00',
-    WARNING_LIGHT: '#FFC400',
-    WARNING_DARK: '#FF991F',
-
-    DANGER: '#DE350B',
-    DANGER_LIGHT: '#FF5630',
-    DANGER_DARK: '#BF2600',
-
-    TEXT: '#F3F2F8',
-    SUBTEXT: '#8D919E',
-
-    WHITE: '#FFFFFF',
     BLACK: '#000000',
-    DISABLE: '#C5CADA',
+    WHITE: '#FFFFFF',
+
+    TEXT: '#F2F2F2',
+    SUBTEXT: '#808080',
+    BACKGROUND: '#0D0D0D',
+
+    PRIMARY: '#8284FA',
+    PRIMARY_DARK: '#5E60CE',
+
+    SECONDARY: '#4EA8DE',
+    SECONDARY_DARK: '#1E6F9F',
+
+    DANGER: '#E25858',
+
+    GRAY_700: '#0D0D0D',
+    GRAY_600: '#1A1A1A',
+    GRAY_500: '#262626',
+    GRAY_400: '#333333',
+    GRAY_300: '#808080',
+    GRAY_200: '#D9D9D9',
+    GRAY_100: '#F2F2F2',
   },
 }
