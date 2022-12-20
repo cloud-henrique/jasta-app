@@ -3,8 +3,6 @@
     "name": "jasta-app",
     "slug": "jasta-app",
     "version": "1.0.0",
-    "assetBundlePatterns": [
-      "**/*"
-    ]
+    "assetBundlePatterns": ["**/*"]
   }
 }
