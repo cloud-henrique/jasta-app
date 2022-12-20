@@ -1,28 +1,27 @@
 import Icon from '@expo/vector-icons/Feather'
-import { useTheme } from 'styled-components/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
-import { Home } from '@screens/Home'
+import { theme } from '@styles/theme'
+
+import { Notes } from '@screens/Notes'
 import { Profile } from '@screens/Profile'
 
 const { Screen, Navigator } = createBottomTabNavigator()
 
 export function TabRoutes() {
-  const { colors } = useTheme()
-
   return (
     <Navigator
-      initialRouteName='Home'
+      initialRouteName='Notes'
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: colors.PRIMARY,
+        tabBarActiveTintColor: theme.colors.primary[500],
         tabBarLabelStyle: { fontSize: 12, fontWeight: '500' },
-        tabBarStyle: { backgroundColor: colors.BACKGROUND, height: 88 },
+        tabBarStyle: { backgroundColor: theme.colors.gray[700], height: 88 },
       }}
     >
       <Screen
-        name='Home'
-        component={Home}
+        name='Notes'
+        component={Notes}
         options={{ tabBarLabel: 'Notas', tabBarIcon: ({ color }) => <Icon name='list' color={color} size={28} /> }}
       />
       <Screen

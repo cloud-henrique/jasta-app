@@ -1,20 +1,15 @@
 import React from 'react'
-import { useColorScheme } from 'react-native'
 
 import { useFonts } from 'expo-font'
 import { StatusBar } from 'expo-status-bar'
-import { ThemeProvider } from 'styled-components/native'
+import { NativeBaseProvider } from 'native-base'
 
 import { Routes } from './src/routes'
-import themes from './src/themes'
+import { theme } from './src/styles/theme'
+
+import { Loading } from './src/components/Loading'
 
 export function App() {
-  const deviceTheme = useColorScheme() || 'dark'
-
-  const theme = themes[deviceTheme]
-
-  const statusBarColor = deviceTheme === 'dark' ? 'light' : 'dark'
-
   const [loaded] = useFonts({
     'Inter-100': require('./src/assets/fonts/Inter-Thin.ttf'),
     'Inter-200': require('./src/assets/fonts/Inter-ExtraLight.ttf'),
@@ -30,11 +25,11 @@ export function App() {
   if (!loaded) return null
 
   return (
-    <ThemeProvider theme={theme}>
+    <NativeBaseProvider theme={theme}>
       <>
-        <StatusBar backgroundColor='transparent' style={statusBarColor} translucent />
-        <Routes />
+        <StatusBar backgroundColor='transparent' style='light' translucent />
+        {loaded ? <Routes /> : <Loading accessibilityLabel='Loading app' />}
       </>
-    </ThemeProvider>
+    </NativeBaseProvider>
   )
 }
