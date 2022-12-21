@@ -1,7 +1,8 @@
 import React from 'react'
+import { StatusBar } from 'react-native'
 
 import { useFonts } from 'expo-font'
-import { StatusBar } from 'expo-status-bar'
+import 'react-native-get-random-values'
 import { NativeBaseProvider } from 'native-base'
 
 import { Routes } from './src/routes'
@@ -27,7 +28,7 @@ export function App() {
   return (
     <NativeBaseProvider theme={theme}>
       <>
-        <StatusBar backgroundColor='transparent' style='light' translucent />
+        <StatusBar backgroundColor='transparent' barStyle='light-content' translucent />
         {loaded ? <Routes /> : <Loading accessibilityLabel='Loading app' />}
       </>
     </NativeBaseProvider>
