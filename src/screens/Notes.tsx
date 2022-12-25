@@ -20,6 +20,7 @@ export function Notes() {
   const toast = useToast()
   const cancelDeleteRef = useRef(null)
 
+  const [isLoading, setIsLoading] = useState(false)
   const [selectedTask, setSelectedTask] = useState('')
   const [newTaskInput, setNewTaskInput] = useState('')
   const [isModalVisible, setIsModalVisible] = useState(false)
@@ -53,18 +54,34 @@ export function Notes() {
   }
 
   function onDeleteTask(id: string) {
+    setIsLoading(true)
+    
     firestore()
-      .collection('tasks')
-      .doc(id)
-      .delete()
-      .then(() => toast.show({ description: 'Tarefa excluída!' }))
-      .catch(error => console.error(error))
-      .finally(() => handleCloseModal())
+    .collection('tasks')
+    .doc(id)
+    .delete()
+    .then(() => toast.show({ description: 'Tarefa excluída!' }))
+    .catch(error => console.error(error))
+    .finally(() => handleCloseModal())
+    
+    setIsLoading(true)
   }
 
   function onToggleTask(id: string) {
     const tasksWithCheckedOne = tasks.map(task => {
-      if (task.id === id) return { ...task, done: !task.done }
+      if (task.id === id) {
+        firestore()
+          .collection('tasks')
+          .doc(id)
+          .update({ done: !task.done })
+          .then(() => {
+            if (task.done) toast.show({ description: 'Tarefa concluída!' })
+            else return
+          })
+          .catch(error => console.error(error))
+
+        return { ...task, done: !task.done }
+      }
       return task
     })
     setTasks(tasksWithCheckedOne)
@@ -156,6 +173,7 @@ export function Notes() {
       <Header />
 
       <AlertDialog
+        isLoading={isLoading}
         colorScheme='danger'
         isOpen={isModalVisible}
         onConfirm={() => onDeleteTask(selectedTask)}

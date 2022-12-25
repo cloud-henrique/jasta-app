@@ -3,7 +3,7 @@
 ## To-do
 
 - [ ] Catch sign-up/sign-in errors
-- [ ] change on firestore document on toggle task
+- [x] change on firestore document on toggle task
 
 ## Future Features
 

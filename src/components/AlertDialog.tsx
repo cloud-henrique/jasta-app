@@ -22,9 +22,10 @@ interface AlertDialogProps extends InterfaceAlertDialogProps {
     confirm: string
   }
   onConfirm: () => void
+  isLoading?: boolean
 }
 
-export function AlertDialog({ text, colorScheme, onConfirm, onClose, leastDestructiveRef, ...rest }: AlertDialogProps) {
+export function AlertDialog({ text, colorScheme, onConfirm, onClose, leastDestructiveRef, isLoading, ...rest }: AlertDialogProps) {
   const ref = useRef(null)
 
   return (
@@ -44,7 +45,7 @@ export function AlertDialog({ text, colorScheme, onConfirm, onClose, leastDestru
             <Button variant='unstyled' onPress={onClose}>
               <Text color='gray.200'>{text.cancel}</Text>
             </Button>
-            <Button colorScheme={colorScheme} onPress={onConfirm} ref={ref}>
+            <Button colorScheme={colorScheme} onPress={onConfirm} ref={ref} isLoading={isLoading}>
               <Text color='gray.200' fontWeight={600}>
                 {text.confirm}
               </Text>
