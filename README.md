@@ -2,7 +2,7 @@
 
 ## Future Features
 
-- [ ] [Firebase Auth](https://rnfirebase.io/)
+- [x] [Firebase Auth](https://rnfirebase.io/)
 - [ ] [React Hook Form](https://react-hook-form.com/)
 - [ ] [Yup validation](https://www.npmjs.com/package/yup)
 - [ ] [Lottie animations](https://lottiefiles.com/)
