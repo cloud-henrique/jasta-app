@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Keyboard, ListRenderItemInfo } from 'react-native'
 
 import { v4 as uuidv4 } from 'uuid'
+import firestore from '@react-native-firebase/firestore'
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import {
@@ -40,18 +41,32 @@ export function Notes() {
   const [tasks, setTasks] = useState<TaskProps[]>([])
 
   async function loadSavedTasks() {
-    try {
-      const savedTasks = await AsyncStorage.getItem(STORAGE_KEY)
-      if (savedTasks !== null) setTasks(JSON.parse(savedTasks))
-    } catch (error) {
-      console.warn(error)
-    }
+    // try {
+    //   const savedTasks = await AsyncStorage.getItem(STORAGE_KEY)
+    //   if (savedTasks !== null) setTasks(JSON.parse(savedTasks))
+    // } catch (error) {
+    //   console.warn(error)
+    // }
+    const subscribe = firestore()
+      .collection('tasks')
+      .onSnapshot(querySnapshot => {
+        const data = querySnapshot.docs.map(doc => {
+          return {
+            id: doc.id,
+            ...doc.data(),
+          }
+        }) as TaskProps[]
+
+        setTasks(data)
+      })
+
+    return () => subscribe
   }
 
   async function setTasksAndSave(newTasks: TaskProps[]) {
     try {
       setTasks(newTasks)
-      await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(newTasks))
+      // await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(newTasks))
     } catch (error) {
       console.warn(error)
     }
@@ -90,6 +105,17 @@ export function Notes() {
     setTasksAndSave(newTasks)
 
     setNewTaskInput('')
+
+    firestore()
+      .collection('tasks')
+      .add({
+        id: uuidv4(),
+        description: newTaskInput.trim(),
+        done: false,
+        created_at: firestore.FieldValue.serverTimestamp(),
+      })
+      .then(() => toast.show({ description: 'Tarefa criada!' }))
+      .catch(error => console.error(error))
   }
 
   function renderDeleteModal() {
