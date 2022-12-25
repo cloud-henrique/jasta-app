@@ -4,25 +4,11 @@ import { Keyboard, ListRenderItemInfo } from 'react-native'
 import { v4 as uuidv4 } from 'uuid'
 import firestore from '@react-native-firebase/firestore'
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import {
-  AlertDialog,
-  Button,
-  Center,
-  Divider,
-  FlatList,
-  HStack,
-  Icon,
-  IconButton,
-  Text,
-  useToast,
-  VStack,
-} from 'native-base'
+import { Center, Divider, FlatList, HStack, Icon, IconButton, Text, useToast, VStack } from 'native-base'
 
 import { Input } from '@components/Input'
 import { Header } from '@components/Header'
-
-const STORAGE_KEY = '@jasta:savedTasks'
+import { AlertDialog } from '@components/AlertDialog'
 
 interface TaskProps {
   id: string
@@ -41,35 +27,20 @@ export function Notes() {
   const [tasks, setTasks] = useState<TaskProps[]>([])
 
   async function loadSavedTasks() {
-    // try {
-    //   const savedTasks = await AsyncStorage.getItem(STORAGE_KEY)
-    //   if (savedTasks !== null) setTasks(JSON.parse(savedTasks))
-    // } catch (error) {
-    //   console.warn(error)
-    // }
     const subscribe = firestore()
       .collection('tasks')
       .onSnapshot(querySnapshot => {
         const data = querySnapshot.docs.map(doc => {
-          return {
-            id: doc.id,
-            ...doc.data(),
-          }
+          const data = doc.data()
+          data.id = doc.id
+
+          return { ...doc.data() }
         }) as TaskProps[]
 
         setTasks(data)
       })
 
     return () => subscribe
-  }
-
-  async function setTasksAndSave(newTasks: TaskProps[]) {
-    try {
-      setTasks(newTasks)
-      // await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(newTasks))
-    } catch (error) {
-      console.warn(error)
-    }
   }
 
   function handleOpenModal(id: string) {
@@ -82,10 +53,13 @@ export function Notes() {
   }
 
   function onDeleteTask(id: string) {
-    const tasksWithoutDeletedOne = tasks.filter(task => task.id !== id)
-    setTasksAndSave(tasksWithoutDeletedOne)
-    handleCloseModal()
-    toast.show({ description: 'Tarefa excluída!' })
+    firestore()
+      .collection('tasks')
+      .doc(id)
+      .delete()
+      .then(() => toast.show({ description: 'Tarefa excluída!' }))
+      .catch(error => console.error(error))
+      .finally(() => handleCloseModal())
   }
 
   function onToggleTask(id: string) {
@@ -93,59 +67,29 @@ export function Notes() {
       if (task.id === id) return { ...task, done: !task.done }
       return task
     })
-    setTasksAndSave(tasksWithCheckedOne)
+    setTasks(tasksWithCheckedOne)
   }
 
   function handleNewTask() {
     Keyboard.dismiss()
     if (!newTaskInput.trim()) return
 
-    const newTasks = [...tasks, { id: uuidv4(), description: newTaskInput.trim(), done: false }]
+    const newTasks = [...tasks, { id: '', description: newTaskInput.trim(), done: false }]
 
-    setTasksAndSave(newTasks)
+    setTasks(newTasks)
 
     setNewTaskInput('')
 
     firestore()
       .collection('tasks')
       .add({
-        id: uuidv4(),
+        // id: uuidv4(),
         description: newTaskInput.trim(),
         done: false,
         created_at: firestore.FieldValue.serverTimestamp(),
       })
       .then(() => toast.show({ description: 'Tarefa criada!' }))
       .catch(error => console.error(error))
-  }
-
-  function renderDeleteModal() {
-    return (
-      <AlertDialog leastDestructiveRef={cancelDeleteRef} isOpen={isModalVisible} onClose={handleCloseModal}>
-        <AlertDialog.Content>
-          <AlertDialog.CloseButton />
-          <AlertDialog.Header bgColor='gray.500' borderColor='transparent'>
-            <Text color='gray.200' bold fontSize='md'>
-              Confirmar exclusão
-            </Text>
-          </AlertDialog.Header>
-          <AlertDialog.Body bgColor='gray.500'>
-            <Text color='gray.200'>Deseja realmente excluir essa tarefa?</Text>
-          </AlertDialog.Body>
-          <AlertDialog.Footer bgColor='gray.500' borderColor='transparent'>
-            <Button.Group space={2}>
-              <Button variant='unstyled' onPress={handleCloseModal} ref={cancelDeleteRef}>
-                <Text color='gray.200'>Cancelar</Text>
-              </Button>
-              <Button colorScheme='danger' onPress={() => onDeleteTask(selectedTask)}>
-                <Text color='gray.200' fontWeight={600}>
-                  Excluir
-                </Text>
-              </Button>
-            </Button.Group>
-          </AlertDialog.Footer>
-        </AlertDialog.Content>
-      </AlertDialog>
-    )
   }
 
   function renderItem({ item }: ListRenderItemInfo<TaskProps>) {
@@ -211,14 +155,20 @@ export function Notes() {
     <VStack bg='gray.600' flex={1}>
       <Header />
 
-      {renderDeleteModal()}
+      <AlertDialog
+        colorScheme='danger'
+        isOpen={isModalVisible}
+        onConfirm={() => onDeleteTask(selectedTask)}
+        onClose={handleCloseModal}
+        leastDestructiveRef={cancelDeleteRef}
+        text={{ title: 'Sair do app', content: 'Deseja realmente sair?', cancel: 'Não', confirm: 'Sair' }}
+      />
 
       <HStack top={-28} mx={6}>
         <Input
           blurOnSubmit
           value={newTaskInput}
           onChangeText={setNewTaskInput}
-          onSubmitEditing={handleNewTask}
           placeholder='Adicione uma nova tarefa'
           flex={1}
         />
