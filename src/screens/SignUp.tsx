@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native'
 import { MaterialCommunityIcons as MCIcon } from '@expo/vector-icons'
 import { Button, Icon, Image, KeyboardAvoidingView, Text } from 'native-base'
 
-import signInImg from '@assets/images/sign-up.png'
+import signUpImg from '@assets/images/sign-up.png'
 
 import { SignUpForm } from '@components/Forms/SignUpForm'
 
@@ -18,7 +18,7 @@ export function SignUp() {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <KeyboardAvoidingView flex={1} bgColor='gray.700' px={5} pt={24}>
-        <Image alt='Sign up illustration' source={signInImg} width={200} height={200} alignSelf='center' />
+        <Image alt='Sign up illustration' source={signUpImg} width={200} height={200} alignSelf='center' />
 
         <Text color='gray.200' fontSize='2xl' bold mt={5}>
           Crie uma nova conta

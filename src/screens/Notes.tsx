@@ -194,6 +194,7 @@ export function Notes() {
           onChangeText={setNewTaskInput}
           onSubmitEditing={handleNewTask}
           placeholder='Adicione uma nova tarefa'
+          flex={1}
         />
         <IconButton
           onPress={handleNewTask}

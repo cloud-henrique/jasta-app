@@ -18,14 +18,28 @@ export function SignUpForm() {
     auth()
       .createUserWithEmailAndPassword(email, password)
       .then(() => Alert.alert('Tudo certo!', 'Sua conta foi criada com sucesso 😁'))
-      .catch((error) => console.error(error))
+      .catch(error => console.error(error))
       .finally(() => setIsLoading(false))
   }
 
   return (
     <VStack>
-      <Input mt={3} autoCapitalize='none' placeholder='E-mail' onChangeText={setEmail} keyboardType='email-address' />
-      <Input mt={3} autoCapitalize='none' placeholder='Senha' onChangeText={setPassword} secureTextEntry />
+      <Input
+        mt={3}
+        autoCapitalize='none'
+        placeholder='E-mail'
+        onChangeText={setEmail}
+        keyboardType='email-address'
+        returnKeyType='next'
+      />
+      <Input
+        mt={3}
+        autoCapitalize='none'
+        placeholder='Senha'
+        onChangeText={setPassword}
+        secureTextEntry
+        onSubmitEditing={handleSignUp}
+      />
 
       <Button mt={5} mb={6} isLoading={isLoading} onPress={handleSignUp}>
         Criar conta

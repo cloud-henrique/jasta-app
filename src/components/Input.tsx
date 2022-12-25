@@ -8,11 +8,9 @@ export function Input({ errorMessage = null, isInvalid, ...rest }: InputProps) {
   const invalid = !!errorMessage || isInvalid
 
   return (
-    <FormControl isInvalid={invalid}>
+    <FormControl isInvalid={invalid} {...rest}>
       <NativeBaseInput
         h={14}
-        maxH={14}
-        minH={14}
         px={4}
         mr={1}
         isInvalid={invalid}
