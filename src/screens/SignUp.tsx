@@ -1,7 +1,7 @@
 import { Keyboard, TouchableWithoutFeedback } from 'react-native'
 
+import { Feather } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
-import { MaterialCommunityIcons as MCIcon } from '@expo/vector-icons'
 import { Button, Icon, Image, KeyboardAvoidingView, Text } from 'native-base'
 
 import signUpImg from '@assets/images/sign-up.png'
@@ -29,7 +29,7 @@ export function SignUp() {
         <Button
           variant='unstyled'
           onPress={handleSignInScreen}
-          leftIcon={<Icon as={MCIcon} name='arrow-left' color='secondary.500' size={6} />}
+          leftIcon={<Icon as={Feather} name='user-check' color='secondary.500' size={6} />}
         >
           <Text color='secondary.500' bold>
             Eu já tenho uma conta

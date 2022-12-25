@@ -1,8 +1,9 @@
 import { useRef, useState } from 'react'
 
+import { Feather } from '@expo/vector-icons'
 import auth from '@react-native-firebase/auth'
-import { MaterialCommunityIcons as MCIcon } from '@expo/vector-icons'
-import { HStack, IconButton, Icon, Text, Button } from 'native-base'
+import { HStack, IconButton, Icon, Text } from 'native-base'
+
 import { AlertDialog } from '@components/AlertDialog'
 
 export function ProfileHeader() {
@@ -23,7 +24,7 @@ export function ProfileHeader() {
 
   return (
     <>
-      <HStack bgColor='gray.400' safeAreaTop p={3} alignItems='center' justifyContent='space-between'>
+      <HStack bgColor='gray.700' safeAreaTop p={3} alignItems='center' justifyContent='space-between'>
         <Text bold color='gray.100' fontSize='xl'>
           Meu Perfil
         </Text>
@@ -31,7 +32,7 @@ export function ProfileHeader() {
         <IconButton
           p={1}
           onPress={handleOpenModal}
-          icon={<Icon as={MCIcon} name='logout-variant' color='red.500' size={8} mr={2} />}
+          icon={<Icon as={Feather} name='log-out' color='red.500' size={8} mr={2} />}
         />
       </HStack>
 
