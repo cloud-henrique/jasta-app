@@ -64,7 +64,7 @@ export function Notes() {
     .catch(error => console.error(error))
     .finally(() => handleCloseModal())
     
-    setIsLoading(true)
+    setIsLoading(false)
   }
 
   function onToggleTask(id: string) {
