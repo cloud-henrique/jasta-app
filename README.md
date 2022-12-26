@@ -2,7 +2,7 @@
 
 ## To-do
 
-- [ ] Create profile screen
+- [ ] Create settings screen
 - [ ] Catch sign-up/sign-in errors
 - [x] change on firestore document on toggle task
 

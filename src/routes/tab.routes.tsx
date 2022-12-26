@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { theme } from '@styles/theme'
 
 import { Notes } from '@screens/Notes'
-import { Profile } from '@screens/Profile'
+import { Settings } from '@screens/Settings'
 
 const { Screen, Navigator } = createBottomTabNavigator()
 
@@ -22,12 +22,12 @@ export function TabRoutes() {
       <Screen
         name='Notes'
         component={Notes}
-        options={{ tabBarLabel: 'Notas', tabBarIcon: ({ color }) => <Icon name='list' color={color} size={28} /> }}
+        options={{ tabBarIcon: ({ color }) => <Icon name='list' color={color} size={28} /> }}
       />
       <Screen
-        name='Profile'
-        component={Profile}
-        options={{ tabBarLabel: 'Perfil', tabBarIcon: ({ color }) => <Icon name='user' color={color} size={28} /> }}
+        name='Settings'
+        component={Settings}
+        options={{ tabBarIcon: ({ color }) => <Icon name='settings' color={color} size={28} /> }}
       />
     </Navigator>
   )
