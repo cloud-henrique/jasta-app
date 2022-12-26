@@ -17,12 +17,12 @@ export function SettingsHeader({ backButton, title }: SettingsHeaderProps) {
   return (
     <HStack bgColor='gray.700' safeAreaTop p={3} alignItems='center'>
       {backButton ? (
-        <Pressable onPress={handleGoBack}>
-          <Icon as={<Feather name='chevron-left' />} color='white' size={6} mr={6} />
+        <Pressable onPress={handleGoBack} mr={2}>
+          <Icon as={Feather} name='chevron-left' color='white' size={6} />
         </Pressable>
       ) : null}
 
-      <Text bold color='gray.100' fontSize='xl'>
+      <Text fontWeight={500} color='gray.100' fontSize='xl'>
         {title}
       </Text>
     </HStack>

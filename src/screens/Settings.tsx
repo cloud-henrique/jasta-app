@@ -25,7 +25,7 @@ export function Settings() {
     {
       icon: 'user',
       title: 'Conta',
-      description: 'Informações da conta',
+      description: 'Editar informações da conta',
       onPress: handleAccountScreen,
     },
     {
@@ -100,27 +100,13 @@ export function Settings() {
 
       <LogoutModal />
 
-      <HStack p={3} m={3} rounded='md' bg='gray.500' borderWidth={1} alignItems='center' borderColor='gray.400'>
-        <Image
-          h={50}
-          w={50}
-          rounded='full'
-          alt='foto de perfil do usuário'
-          source={{ uri: 'https://github.com/cloud-henrique.png' }}
-        />
-        <VStack ml={2}>
-          <Text>Cláudio Henrique</Text>
-          <Text>00claudio.henrique@gmail.com</Text>
-        </VStack>
-      </HStack>
-
       <ScrollView>
         {list.map(item => (
           <Pressable key={item.icon} onPress={item.onPress}>
             <HStack p={3} m={3} rounded='md' bg='gray.500' alignItems='center' borderWidth={1} borderColor='gray.400'>
               <Icon as={<Feather name={item.icon} />} color='gray.300' size={6} />
               <VStack ml={3} flex={1}>
-                <Text bold fontSize='md'>
+                <Text fontWeight={600} fontSize='md'>
                   {item.title}
                 </Text>
                 <Text>{item.description}</Text>

@@ -1,28 +1,43 @@
-import { SettingsHeader } from '@components/Headers/SettingsHeader'
 import auth from '@react-native-firebase/auth'
-import { HStack, Image, Text, VStack } from 'native-base'
+import { Button, Center, Image, Input, Text, VStack } from 'native-base'
+
+import { SettingsHeader } from '@components/Headers/SettingsHeader'
 
 export function Account() {
   const user = auth().currentUser
 
   return (
-    <VStack bg='gray.600' flex={1}>
+    <>
       <SettingsHeader title='Conta' backButton />
-      
-      <HStack p={3} m={3} rounded='md' bg='gray.500' borderWidth={1} alignItems='center' borderColor='gray.400'>
-        <Image
-          h={50}
-          w={50}
-          rounded='full'
-          alt='foto de perfil do usuário'
-          source={{ uri: user?.photoURL || 'https://github.com/cloud-henrique.png' }}
-        />
-      
-        <VStack ml={2}>
-          <Text>{user?.displayName}</Text>
-          <Text>{user?.email}</Text>
+
+      <VStack bg='gray.600' flex={1} px={3}>
+        <Center>
+          <Image
+            mt={10}
+            mb={3}
+            h={150}
+            w={150}
+            rounded='full'
+            alt='foto de perfil do usuário'
+            source={{ uri: user?.photoURL || 'https://github.com/cloud-henrique.png' }}
+          />
+          <Text bold color='primary.500' fontSize='sm'>
+            Alterar foto
+          </Text>
+        </Center>
+
+        <VStack py={2}>
+          <Text color='gray.200'>Nome</Text>
+          <Input placeholder='Nome' />
         </VStack>
-      </HStack>
-    </VStack>
+
+        <VStack py={2}>
+          <Text color='gray.200'>E-mail</Text>
+          <Input isDisabled value={user?.email ?? ''} />
+        </VStack>
+
+        <Button mt={4}>Salvar alterações</Button>
+      </VStack>
+    </>
   )
 }
