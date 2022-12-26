@@ -9,28 +9,7 @@ export function Input({ errorMessage = null, isInvalid, ...rest }: InputProps) {
 
   return (
     <FormControl isInvalid={invalid} {...rest}>
-      <NativeBaseInput
-        h={14}
-        px={4}
-        isInvalid={invalid}
-        rounded='lg'
-        bg='gray.500'
-        color='gray.100'
-        fontSize='md'
-        borderWidth={1}
-        borderColor='gray.700'
-        keyboardAppearance='dark'
-        placeholderTextColor='gray.300'
-        _invalid={{ borderWidth: 1, borderColor: 'red.500' }}
-        _focus={{
-          bg: 'gray.500',
-          borderWidth: 1,
-          borderColor: 'primary.700',
-          cursorColor: 'gray.100',
-          selectionColor: 'gray.100',
-        }}
-        {...rest}
-      />
+      <NativeBaseInput {...rest} />
       <FormControl.ErrorMessage>{errorMessage}</FormControl.ErrorMessage>
     </FormControl>
   )

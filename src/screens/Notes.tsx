@@ -3,11 +3,25 @@ import { Keyboard, ListRenderItemInfo } from 'react-native'
 
 import firestore from '@react-native-firebase/firestore'
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons'
-import { Center, Divider, FlatList, HStack, Icon, IconButton, Text, useToast, VStack } from 'native-base'
+import {
+  Input,
+  Center,
+  Divider,
+  FlatList,
+  HStack,
+  Icon,
+  IconButton,
+  Text,
+  useToast,
+  VStack,
+  Pressable,
+  Checkbox,
+  AlertDialog,
+  Button,
+} from 'native-base'
 
-import { Input } from '@components/Input'
 import { Header } from '@components/Header'
-import { AlertDialog } from '@components/Modals/AlertDialog'
+// import { AlertDialog } from '@components/Modals/AlertDialog'
 
 interface TaskProps {
   id: string
@@ -54,27 +68,27 @@ export function Notes() {
 
   function onDeleteTask(id: string) {
     setIsLoading(true)
-    
+
     firestore()
-    .collection('tasks')
-    .doc(id)
-    .delete()
-    .then(() => toast.show({ description: 'Tarefa excluída!' }))
-    .catch(error => console.error(error))
-    .finally(() => handleCloseModal())
-    
+      .collection('tasks')
+      .doc(id)
+      .delete()
+      .then(() => toast.show({ description: 'Tarefa excluída!', duration: 1000 }))
+      .catch(error => console.error(error))
+      .finally(() => handleCloseModal())
+
     setIsLoading(false)
   }
 
   function onToggleTask(id: string) {
-    const tasksWithCheckedOne = tasks.map(task => {
+    const tasksUpdated = tasks.map(task => {
       if (task.id === id) {
         firestore()
           .collection('tasks')
           .doc(id)
           .update({ done: !task.done })
           .then(() => {
-            if (!task.done) toast.show({ description: 'Tarefa concluída!' })
+            if (!task.done) toast.show({ description: 'Tarefa concluída!', duration: 1000 })
             else return
           })
           .catch(error => console.error(error))
@@ -83,7 +97,7 @@ export function Notes() {
       }
       return task
     })
-    setTasks(tasksWithCheckedOne)
+    setTasks(tasksUpdated)
   }
 
   function handleNewTask() {
@@ -99,49 +113,37 @@ export function Notes() {
     firestore()
       .collection('tasks')
       .add({
-        // id: uuidv4(),
         description: newTaskInput.trim(),
         done: false,
         created_at: firestore.FieldValue.serverTimestamp(),
       })
-      .then(() => toast.show({ description: 'Tarefa criada!' }))
+      .then(() => toast.show({ description: 'Tarefa criada!', duration: 1000 }))
       .catch(error => console.error(error))
   }
 
   function renderItem({ item }: ListRenderItemInfo<TaskProps>) {
     return (
-      <HStack p={1.5} shadow='8' rounded='lg' bg='gray.500' borderWidth={1} alignItems='center' borderColor='gray.400'>
-        <IconButton
-          onPress={() => onToggleTask(item.id)}
-          rounded='sm'
-          w='10%'
-          size={8}
-          variant='solid'
-          bg='transparent'
-          color='gray.300'
-          icon={
-            <Icon
-              as={MaterialCommunityIcons}
-              size={6}
-              color={item.done ? 'secondary.500' : 'primary.500'}
-              name={item.done ? 'check-circle-outline' : 'circle-outline'}
-            />
-          }
-        />
-        <Text color='gray.100' strikeThrough={item.done} flex={10} w='80%'>
+      <HStack
+        p={1.5}
+        shadow='8'
+        rounded='lg'
+        bg='gray.500'
+        borderWidth={1}
+        alignItems='center'
+        borderColor='gray.400'
+        justifyContent='space-between'
+      >
+        <Checkbox value={item.description} onChange={() => onToggleTask(item.id)} w='80%' maxW='80%' minW='80%'>
           {item.description}
-        </Text>
+        </Checkbox>
 
         <IconButton
           onPress={() => handleOpenModal(item.id)}
-          w='10%'
-          flex={1}
           rounded='sm'
           bg='transparent'
           variant='solid'
-          color='gray.300'
           _pressed={{ bg: 'gray.400', _icon: { color: 'red.500' } }}
-          icon={<Icon as={MaterialCommunityIcons} name='trash-can-outline' size={6} color='gray.300' />}
+          icon={<Icon as={<Feather name='trash-2' />} color='gray.300' size={6} />}
         />
       </HStack>
     )
@@ -162,6 +164,32 @@ export function Notes() {
     )
   }
 
+  function DeleteModal() {
+    return (
+      <AlertDialog isOpen={isModalVisible} leastDestructiveRef={cancelDeleteRef} onClose={handleCloseModal}>
+        <AlertDialog.Content>
+          <AlertDialog.CloseButton />
+          <AlertDialog.Header>
+            <Text>Excluir</Text>
+          </AlertDialog.Header>
+          <AlertDialog.Body>
+            <Text>Deseja realmente excluir essa tarefa?</Text>
+          </AlertDialog.Body>
+          <AlertDialog.Footer>
+            <Button.Group space='2xl'>
+              <Button variant='unstyled' onPress={handleCloseModal}>
+                Não
+              </Button>
+              <Button colorScheme='danger' onPress={() => onDeleteTask(selectedTask)} isLoading={isLoading}>
+                Sim
+              </Button>
+            </Button.Group>
+          </AlertDialog.Footer>
+        </AlertDialog.Content>
+      </AlertDialog>
+    )
+  }
+
   useEffect(() => {
     loadSavedTasks()
   }, [])
@@ -170,35 +198,20 @@ export function Notes() {
     <VStack bg='gray.600' flex={1}>
       <Header />
 
-      <AlertDialog
-        isLoading={isLoading}
-        colorScheme='primary'
-        isOpen={isModalVisible}
-        onConfirm={() => onDeleteTask(selectedTask)}
-        onClose={handleCloseModal}
-        leastDestructiveRef={cancelDeleteRef}
-        text={{ title: 'Excluir', content: 'Deseja excluir essa tarefa?', cancel: 'Não', confirm: 'Sim' }}
-      />
+      <DeleteModal />
 
-      <HStack top={-28} mx={6}>
-        <Input
-          blurOnSubmit
-          value={newTaskInput}
-          onChangeText={setNewTaskInput}
-          placeholder='Adicione uma nova tarefa'
-          flex={1}
-        />
-        <IconButton
-          ml={1}
-          size={14}
-          rounded='lg'
-          bg='primary.700'
-          variant='solid'
-          onPress={handleNewTask}
-          _pressed={{ bg: 'secondary.500' }}
-          _icon={{ as: MaterialCommunityIcons, name: 'plus-circle-outline', size: 6 }}
-        />
-      </HStack>
+      <Input
+        mx={6}
+        top={-28}
+        value={newTaskInput}
+        onChangeText={setNewTaskInput}
+        placeholder='Adicione uma nova tarefa'
+        InputRightElement={
+          <Pressable onPress={handleNewTask} bg='primary.700' size={14} alignItems='center' justifyContent='center'>
+            <Icon as={<Feather name='plus-circle' />} size={6} color='white' />
+          </Pressable>
+        }
+      />
 
       <VStack px={6}>
         <HStack w='full' justifyContent='space-between' pb={5}>
@@ -207,7 +220,7 @@ export function Notes() {
               Criadas
             </Text>
             <Center rounded='full' bg='gray.400' px={2} py={0.5}>
-              <Text color='gray.200' bold fontSize='xs'>
+              <Text bold fontSize='xs'>
                 {tasks.length}
               </Text>
             </Center>
@@ -218,7 +231,7 @@ export function Notes() {
               Concluídas
             </Text>
             <Center rounded='full' bg='gray.400' px={2} py={0.5}>
-              <Text color='gray.200' bold fontSize='xs'>
+              <Text bold fontSize='xs'>
                 {tasks.filter(item => item.done).length}
               </Text>
             </Center>

@@ -14,9 +14,9 @@ export function TabRoutes() {
       initialRouteName='Notes'
       screenOptions={{
         headerShown: false,
+        tabBarShowLabel: false,
         tabBarActiveTintColor: theme.colors.primary[500],
-        tabBarLabelStyle: { fontSize: 12, fontWeight: '500' },
-        tabBarStyle: { backgroundColor: theme.colors.gray[700], height: 88 },
+        tabBarStyle: { backgroundColor: theme.colors.gray[700] },
       }}
     >
       <Screen
