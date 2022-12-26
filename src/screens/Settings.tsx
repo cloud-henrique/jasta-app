@@ -1,9 +1,11 @@
-import auth from '@react-native-firebase/auth'
+import { useRef, useState } from 'react'
+
 import { Feather } from '@expo/vector-icons'
+import auth from '@react-native-firebase/auth'
 import { AlertDialog, Button, HStack, Icon, Image, Pressable, ScrollView, Text, VStack } from 'native-base'
 
 import { SettingsHeader } from '@components/Headers/SettingsHeader'
-import { useRef, useState } from 'react'
+import { useNavigation } from '@react-navigation/native'
 
 interface ListProps {
   icon: keyof typeof Feather.glyphMap
@@ -17,12 +19,14 @@ export function Settings() {
   const [isLoading, setIsLoading] = useState(false)
   const [isModalVisible, setIsModalVisible] = useState(false)
 
+  const navigation = useNavigation()
+
   const list: ListProps[] = [
     {
       icon: 'user',
-      title: 'Perfil',
+      title: 'Conta',
       description: 'Informações da conta',
-      onPress: () => console.log('hey'),
+      onPress: handleAccountScreen,
     },
     {
       icon: 'shield',
@@ -49,6 +53,10 @@ export function Settings() {
       onPress: handleOpenModal,
     },
   ]
+
+  function handleAccountScreen() {
+    navigation.navigate('Account')
+  }
 
   function handleLogout() {
     setIsLoading(true)
@@ -88,7 +96,7 @@ export function Settings() {
 
   return (
     <VStack flex={1} bgColor='gray.600'>
-      <SettingsHeader />
+      <SettingsHeader title='Configurações' />
 
       <LogoutModal />
 

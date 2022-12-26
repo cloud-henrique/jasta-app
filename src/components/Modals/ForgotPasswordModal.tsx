@@ -11,7 +11,7 @@ export function ForgotPasswordModal({ onSubmit, ...rest }: ForgotModalProps) {
   const [email, setEmail] = useState('')
 
   return (
-    <Modal animationPreset='slide' {...rest}>
+    <Modal animationPreset='slide' backgroundColor='gray.700:alpha.80' {...rest}>
       <Modal.Content w='full'>
         <Modal.CloseButton />
 

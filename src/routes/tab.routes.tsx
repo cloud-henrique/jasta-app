@@ -3,8 +3,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
 import { theme } from '@styles/theme'
 
-import { Notes } from '@screens/Notes'
-import { Settings } from '@screens/Settings'
+import { NotesStack } from './stacks/notes.routes'
+import { SettingsStack } from './stacks/settings.routes'
 
 const { Screen, Navigator } = createBottomTabNavigator()
 
@@ -20,13 +20,13 @@ export function TabRoutes() {
       }}
     >
       <Screen
-        name='Notes'
-        component={Notes}
+        name='NotesStack'
+        component={NotesStack}
         options={{ tabBarIcon: ({ color }) => <Icon name='list' color={color} size={28} /> }}
       />
       <Screen
-        name='Settings'
-        component={Settings}
+        name='SettingsStack'
+        component={SettingsStack}
         options={{ tabBarIcon: ({ color }) => <Icon name='settings' color={color} size={28} /> }}
       />
     </Navigator>

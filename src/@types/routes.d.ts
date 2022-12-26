@@ -5,6 +5,7 @@ export declare global {
       Settings: undefined
       SignIn: undefined
       SignUp: undefined
+      Account: undefined
     }
   }
 }
