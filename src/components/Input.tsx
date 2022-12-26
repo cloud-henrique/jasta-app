@@ -12,7 +12,6 @@ export function Input({ errorMessage = null, isInvalid, ...rest }: InputProps) {
       <NativeBaseInput
         h={14}
         px={4}
-        mr={1}
         isInvalid={invalid}
         rounded='lg'
         bg='gray.500'

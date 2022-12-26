@@ -27,13 +27,12 @@ export function SignUp() {
         <SignUpForm />
 
         <Button
-          variant='unstyled'
+          variant='ghost'
+          colorScheme='secondary'
           onPress={handleSignInScreen}
           leftIcon={<Icon as={Feather} name='user-check' color='secondary.500' size={6} />}
         >
-          <Text color='secondary.500' bold>
-            Eu já tenho uma conta
-          </Text>
+          Eu já tenho uma conta
         </Button>
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>

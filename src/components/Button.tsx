@@ -7,8 +7,8 @@ interface ButtonProps extends IButtonProps {
 
 export function Button({ children, ...rest }: ButtonProps) {
   return (
-    <NativeBaseButton px={4} h={14} bg='primary.700' _pressed={{ bgColor: 'primary.500' }} {...rest}>
-      <Text color='gray.200' fontWeight={600} textAlign='center' fontSize='md'>
+    <NativeBaseButton px={4} h={14} bg='indigo.500' _pressed={{ bgColor: 'indigo.500' }} {...rest}>
+      <Text fontWeight={600} textAlign='center' fontSize='md'>
         {children}
       </Text>
     </NativeBaseButton>

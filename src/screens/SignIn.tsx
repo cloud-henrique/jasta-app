@@ -1,9 +1,9 @@
+import { Keyboard, TouchableWithoutFeedback } from 'react-native'
+
 import { Image, KeyboardAvoidingView, Text } from 'native-base'
 
 import signInImg from '@assets/images/sign-in.png'
-
 import { SignInForm } from '@components/Forms/SignInForm'
-import { Keyboard, TouchableWithoutFeedback } from 'react-native'
 
 export function SignIn() {
   return (
@@ -16,8 +16,6 @@ export function SignIn() {
         </Text>
 
         <SignInForm />
-
-        
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   )

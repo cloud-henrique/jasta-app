@@ -1,14 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Keyboard, ListRenderItemInfo } from 'react-native'
 
-import { v4 as uuidv4 } from 'uuid'
 import firestore from '@react-native-firebase/firestore'
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons'
 import { Center, Divider, FlatList, HStack, Icon, IconButton, Text, useToast, VStack } from 'native-base'
 
 import { Input } from '@components/Input'
 import { Header } from '@components/Header'
-import { AlertDialog } from '@components/AlertDialog'
+import { AlertDialog } from '@components/Modals/AlertDialog'
 
 interface TaskProps {
   id: string
@@ -75,7 +74,7 @@ export function Notes() {
           .doc(id)
           .update({ done: !task.done })
           .then(() => {
-            if (task.done) toast.show({ description: 'Tarefa concluída!' })
+            if (!task.done) toast.show({ description: 'Tarefa concluída!' })
             else return
           })
           .catch(error => console.error(error))
@@ -120,12 +119,11 @@ export function Notes() {
           variant='solid'
           bg='transparent'
           color='gray.300'
-          _pressed={{ bg: 'gray.400', _icon: { color: item.done ? 'primary.700' : 'secondary.700' } }}
           icon={
             <Icon
               as={MaterialCommunityIcons}
               size={6}
-              color={item.done ? 'primary.500' : 'secondary.500'}
+              color={item.done ? 'secondary.500' : 'primary.500'}
               name={item.done ? 'check-circle-outline' : 'circle-outline'}
             />
           }
@@ -174,12 +172,12 @@ export function Notes() {
 
       <AlertDialog
         isLoading={isLoading}
-        colorScheme='danger'
+        colorScheme='primary'
         isOpen={isModalVisible}
         onConfirm={() => onDeleteTask(selectedTask)}
         onClose={handleCloseModal}
         leastDestructiveRef={cancelDeleteRef}
-        text={{ title: 'Sair do app', content: 'Deseja realmente sair?', cancel: 'Não', confirm: 'Sair' }}
+        text={{ title: 'Excluir', content: 'Deseja excluir essa tarefa?', cancel: 'Não', confirm: 'Sim' }}
       />
 
       <HStack top={-28} mx={6}>
@@ -191,12 +189,12 @@ export function Notes() {
           flex={1}
         />
         <IconButton
-          onPress={handleNewTask}
+          ml={1}
           size={14}
           rounded='lg'
-          bg='secondary.700'
+          bg='primary.700'
           variant='solid'
-          color='gray.100'
+          onPress={handleNewTask}
           _pressed={{ bg: 'secondary.500' }}
           _icon={{ as: MaterialCommunityIcons, name: 'plus-circle-outline', size: 6 }}
         />
@@ -205,7 +203,7 @@ export function Notes() {
       <VStack px={6}>
         <HStack w='full' justifyContent='space-between' pb={5}>
           <HStack alignItems='center' justifyContent='center'>
-            <Text color='secondary.500' bold mr={2}>
+            <Text color='primary.500' bold mr={2}>
               Criadas
             </Text>
             <Center rounded='full' bg='gray.400' px={2} py={0.5}>
@@ -216,7 +214,7 @@ export function Notes() {
           </HStack>
 
           <HStack alignItems='center' justifyContent='center'>
-            <Text color='primary.500' bold mr={2}>
+            <Text color='secondary.500' bold mr={2}>
               Concluídas
             </Text>
             <Center rounded='full' bg='gray.400' px={2} py={0.5}>

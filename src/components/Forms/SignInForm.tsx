@@ -1,13 +1,12 @@
 import { useState } from 'react'
+import { Alert } from 'react-native'
 
+import { Feather } from '@expo/vector-icons'
 import auth from '@react-native-firebase/auth'
 import { useNavigation } from '@react-navigation/native'
-import { Button as NBButton, Icon, Text, useToast, VStack } from 'native-base'
-import { MaterialCommunityIcons as MCIcon, Feather } from '@expo/vector-icons'
+import { Button, Icon, useToast, VStack } from 'native-base'
 
 import { Input } from '@components/Input'
-import { Button } from '@components/Button'
-import { Alert } from 'react-native'
 
 export function SignInForm() {
   const [email, setEmail] = useState('')
@@ -60,29 +59,27 @@ export function SignInForm() {
         onSubmitEditing={handleSignIn}
       />
 
-      <Button mt={5} mb={6} isLoading={isLoading} onPress={handleSignIn}>
+      <Button size='lg' my={6} isLoading={isLoading} onPress={handleSignIn}>
         Entrar
       </Button>
 
-      <NBButton
-        variant='unstyled'
+      <Button
+        variant='ghost'
+        colorScheme='secondary'
         onPress={handleSignUpScreen}
-        leftIcon={<Icon as={Feather} name='user-plus' color='secondary.500' size={6} />}
+        leftIcon={<Icon as={Feather} name='user-plus' size={6} />}
       >
-        <Text color='secondary.500' bold>
-          Criar conta
-        </Text>
-      </NBButton>
+        Criar conta
+      </Button>
 
-      <NBButton
-        variant='unstyled'
+      <Button
+        variant='ghost'
+        colorScheme='secondary'
         onPress={handleForgotPassword}
-        leftIcon={<Icon as={Feather} name='mail' color='secondary.500' size={6} />}
+        leftIcon={<Icon as={Feather} name='mail' size={6} />}
       >
-        <Text color='secondary.500' bold>
-          Esqueci minha senha
-        </Text>
-      </NBButton>
+        Esqueci minha senha
+      </Button>
     </VStack>
   )
 }

@@ -1,14 +1,46 @@
 import { extendTheme } from 'native-base'
+import colors from 'native-base/lib/typescript/theme/base/colors'
 
 export const theme = extendTheme({
+  config: {
+    initialColorMode: 'dark',
+  },
   colors: {
     primary: {
-      500: '#8284FA',
-      700: '#5E60CE',
+      50: '#eef2ff',
+      100: '#e0e7ff',
+      200: '#c7d2fe',
+      300: '#a5b4fc',
+      400: '#818cf8',
+      500: '#6366f1',
+      600: '#4f46e5',
+      700: '#4338ca',
+      800: '#3730a3',
+      900: '#312e81',
     },
     secondary: {
-      500: '#4EA8DE',
-      700: '#1E6F9F',
+      50: '#ecfdf5',
+      100: '#d1fae5',
+      200: '#a7f3d0',
+      300: '#6ee7b7',
+      400: '#34d399',
+      500: '#10b981',
+      600: '#059669',
+      700: '#047857',
+      800: '#065f46',
+      900: '#064e3b',
+    },
+    tertiary: {
+      50: '#fff7ed',
+      100: '#ffedd5',
+      200: '#fed7aa',
+      300: '#fdba74',
+      400: '#fb923c',
+      500: '#f97316',
+      600: '#ea580c',
+      700: '#c2410c',
+      800: '#9a3412',
+      900: '#7c2d12',
     },
     gray: {
       100: '#F2F2F2',
@@ -43,5 +75,21 @@ export const theme = extendTheme({
   },
   sizes: {
     14: 56,
+  },
+  components: {
+    Button: {
+      sizes: {
+        lg: { h: 14, _text: { fontSize: 'md', fontWeight: '600' } },
+        md: { _text: { fontWeight: '600' } },
+        sm: { _text: { fontWeight: '600' } },
+        xs: { _text: { fontWeight: '600' } },
+      },
+      variants: {
+        solid: { bg: 'primary.500', _pressed: { bg: 'primary.700' } },
+      },
+    },
+    Text: {
+      baseStyle: { color: 'white', _dark: { color: 'black' } },
+    },
   },
 })

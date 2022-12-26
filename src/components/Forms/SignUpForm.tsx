@@ -1,11 +1,10 @@
 import { useState } from 'react'
 import { Alert } from 'react-native'
 
-import { VStack } from 'native-base'
+import { Button, VStack } from 'native-base'
 import auth from '@react-native-firebase/auth'
 
 import { Input } from '@components/Input'
-import { Button } from '@components/Button'
 
 export function SignUpForm() {
   const [email, setEmail] = useState('')
@@ -41,7 +40,7 @@ export function SignUpForm() {
         onSubmitEditing={handleSignUp}
       />
 
-      <Button mt={5} mb={6} isLoading={isLoading} onPress={handleSignUp}>
+      <Button size='lg' mt={5} mb={6} isLoading={isLoading} onPress={handleSignUp}>
         Criar conta
       </Button>
     </VStack>

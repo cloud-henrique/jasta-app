@@ -4,7 +4,7 @@ import { Feather } from '@expo/vector-icons'
 import auth from '@react-native-firebase/auth'
 import { HStack, IconButton, Icon, Text } from 'native-base'
 
-import { AlertDialog } from '@components/AlertDialog'
+import { AlertDialog } from '@components/Modals/AlertDialog'
 
 export function ProfileHeader() {
   const cancelDeleteRef = useRef(null)
