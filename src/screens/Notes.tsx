@@ -1,27 +1,26 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Keyboard, ListRenderItemInfo } from 'react-native'
 
+import { Feather } from '@expo/vector-icons'
 import firestore from '@react-native-firebase/firestore'
-import { Feather, MaterialCommunityIcons } from '@expo/vector-icons'
 import {
-  Input,
+  AlertDialog,
+  Button,
   Center,
+  Checkbox,
   Divider,
   FlatList,
   HStack,
   Icon,
   IconButton,
-  Text,
-  useToast,
-  VStack,
+  Input,
   Pressable,
-  Checkbox,
-  AlertDialog,
-  Button,
+  Text,
+  VStack,
+  useToast,
 } from 'native-base'
 
 import { Header } from '@components/Header'
-// import { AlertDialog } from '@components/Modals/AlertDialog'
 
 interface TaskProps {
   id: string
@@ -169,12 +168,8 @@ export function Notes() {
       <AlertDialog isOpen={isModalVisible} leastDestructiveRef={cancelDeleteRef} onClose={handleCloseModal}>
         <AlertDialog.Content>
           <AlertDialog.CloseButton />
-          <AlertDialog.Header>
-            <Text>Excluir</Text>
-          </AlertDialog.Header>
-          <AlertDialog.Body>
-            <Text>Deseja realmente excluir essa tarefa?</Text>
-          </AlertDialog.Body>
+          <AlertDialog.Header>Excluir</AlertDialog.Header>
+          <AlertDialog.Body>Deseja realmente excluir essa tarefa?</AlertDialog.Body>
           <AlertDialog.Footer>
             <Button.Group space='2xl'>
               <Button variant='unstyled' onPress={handleCloseModal}>
@@ -213,7 +208,7 @@ export function Notes() {
         }
       />
 
-      <VStack px={6}>
+      <HStack px={6}>
         <HStack w='full' justifyContent='space-between' pb={5}>
           <HStack alignItems='center' justifyContent='center'>
             <Text color='primary.500' bold mr={2}>
@@ -237,7 +232,7 @@ export function Notes() {
             </Center>
           </HStack>
         </HStack>
-      </VStack>
+      </HStack>
 
       <FlatList
         data={tasks}
