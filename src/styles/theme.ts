@@ -1,5 +1,4 @@
 import { extendTheme } from 'native-base'
-import colors from 'native-base/lib/typescript/theme/base/colors'
 
 export const theme = extendTheme({
   config: {
@@ -7,40 +6,12 @@ export const theme = extendTheme({
   },
   colors: {
     primary: {
-      // 50: '#eef2ff',
-      // 100: '#e0e7ff',
-      // 200: '#c7d2fe',
-      // 300: '#a5b4fc',
-      // 400: '#818cf8',
       500: '#8284FA',
-      // 600: '#4f46e5',
       700: '#5E60CE',
-      // 800: '#3730a3',
-      // 900: '#312e81',
     },
     secondary: {
-      // 50: '#ecfdf5',
-      // 100: '#d1fae5',
-      // 200: '#a7f3d0',
-      // 300: '#6ee7b7',
-      // 400: '#34d399',
       500: '#4EA8DE',
-      // 600: '#059669',
       700: '#1E6F9F',
-      // 800: '#065f46',
-      // 900: '#064e3b',
-    },
-    tertiary: {
-      50: '#fff7ed',
-      100: '#ffedd5',
-      200: '#fed7aa',
-      300: '#fdba74',
-      400: '#fb923c',
-      500: '#f97316',
-      600: '#ea580c',
-      700: '#c2410c',
-      800: '#9a3412',
-      900: '#7c2d12',
     },
     gray: {
       100: '#F2F2F2',
