@@ -6,12 +6,28 @@ export const theme = extendTheme({
   },
   colors: {
     primary: {
-      500: '#8284FA',
-      700: '#5E60CE',
+      50: '#eef2ff',
+      100: '#e0e7ff',
+      200: '#c7d2fe',
+      300: '#a5b4fc',
+      400: '#818cf8',
+      500: '#6366f1',
+      600: '#4f46e5',
+      700: '#4338ca',
+      800: '#3730a3',
+      900: '#312e81',
     },
     secondary: {
-      500: '#4EA8DE',
-      700: '#1E6F9F',
+      50: '#eff6ff',
+      100: '#dbeafe',
+      200: '#bfdbfe',
+      300: '#93c5fd',
+      400: '#60a5fa',
+      500: '#3b82f6',
+      600: '#2563eb',
+      700: '#1d4ed8',
+      800: '#1e40af',
+      900: '#1e3a8a',
     },
     gray: {
       100: '#F2F2F2',
@@ -21,9 +37,6 @@ export const theme = extendTheme({
       500: '#262626',
       600: '#1A1A1A',
       700: '#0D0D0D',
-    },
-    danger: {
-      500: '#E25858',
     },
   },
   fonts: {
@@ -50,7 +63,7 @@ export const theme = extendTheme({
   components: {
     Button: {
       sizes: {
-        lg: { h: 14, _text: { fontSize: 'md', fontWeight: 600 } },
+        lg: { h: 14, _text: { fontSize: 'md', fontWeight: 500 } },
         md: { _text: { fontWeight: 500 } },
         sm: { _text: { fontWeight: 500 } },
         xs: { _text: { fontWeight: 500 } },

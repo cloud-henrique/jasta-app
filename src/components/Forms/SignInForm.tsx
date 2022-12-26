@@ -4,14 +4,14 @@ import { Alert } from 'react-native'
 import { Feather } from '@expo/vector-icons'
 import auth from '@react-native-firebase/auth'
 import { useNavigation } from '@react-navigation/native'
-import { Button, Icon, useToast, VStack } from 'native-base'
-
-import { Input } from '@components/Input'
+import { Button, Icon, Input, useToast, VStack } from 'native-base'
+import { ForgotPasswordModal } from '@components/Modals/ForgotPasswordModal'
 
 export function SignInForm() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [isModalVisible, setIsModalVisible] = useState(false)
 
   const toast = useToast()
   const navigation = useNavigation()
@@ -30,14 +30,24 @@ export function SignInForm() {
     navigation.navigate('SignUp')
   }
 
-  function handleForgotPassword() {
-    setIsLoading(true)
+  function handleForgotPassword(email: string) {
+    setIsModalVisible(true)
 
     auth()
       .sendPasswordResetEmail(email)
-      .then(() => Alert.alert('Redefinir senha', `Enviamos um email para ${email}`))
-      .catch(() => toast.show({ title: 'Por favor, insira um e-mail válido' }))
+      .then(() => toast.show({ title: 'Redefinir senha', description: `Enviamos um email para ${email}` }))
+      .catch(() => toast.show({ description: 'Por favor, insira um e-mail válido' }))
       .finally(() => setIsLoading(false))
+
+    setIsModalVisible(false)
+  }
+
+  function handleOpenModal() {
+    setIsModalVisible(true)
+  }
+
+  function handleCloseModal() {
+    setIsModalVisible(false)
   }
 
   return (
@@ -75,11 +85,13 @@ export function SignInForm() {
       <Button
         variant='ghost'
         colorScheme='secondary'
-        onPress={handleForgotPassword}
+        onPress={handleOpenModal}
         leftIcon={<Icon as={Feather} name='mail' size={6} />}
       >
         Esqueci minha senha
       </Button>
+
+      <ForgotPasswordModal onSubmit={handleForgotPassword} isOpen={isModalVisible} onClose={handleCloseModal} />
     </VStack>
   )
 }

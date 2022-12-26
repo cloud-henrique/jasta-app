@@ -1,10 +1,8 @@
 import { useState } from 'react'
 import { Alert } from 'react-native'
 
-import { Button, VStack } from 'native-base'
 import auth from '@react-native-firebase/auth'
-
-import { Input } from '@components/Input'
+import { Button, Input, VStack } from 'native-base'
 
 export function SignUpForm() {
   const [email, setEmail] = useState('')

@@ -1,18 +1,40 @@
-import { Actionsheet, Text } from 'native-base'
-import { InterfaceActionsheetProps } from 'native-base/lib/typescript/components/composites/Actionsheet/types'
+import { useState } from 'react'
 
-interface ForgotModalProps extends InterfaceActionsheetProps {}
+import { Button, Input, Modal, Text } from 'native-base'
+import { InterfaceModalProps } from 'native-base/lib/typescript/components/composites/Modal/types'
 
-export function ForgotPasswordModal({ isOpen, onClose, ...rest }: ForgotModalProps) {
+interface ForgotModalProps extends InterfaceModalProps {
+  onSubmit: (email: string) => void
+}
+
+export function ForgotPasswordModal({ onSubmit, ...rest }: ForgotModalProps) {
+  const [email, setEmail] = useState('')
+
   return (
-    <Actionsheet isOpen={isOpen} onClose={onClose} {...rest}>
-      <Actionsheet.Content>
-        <Text>Insira aqui o seu e-mail</Text>
-        <Actionsheet.Item>Cláudio</Actionsheet.Item>
-        <Actionsheet.Item>Henrique</Actionsheet.Item>
-        <Actionsheet.Item>Oliveira</Actionsheet.Item>
-        <Actionsheet.Item>Andrade</Actionsheet.Item>
-      </Actionsheet.Content>
-    </Actionsheet>
+    <Modal animationPreset='slide' {...rest}>
+      <Modal.Content w='full'>
+        <Modal.CloseButton />
+
+        <Modal.Header>Insira aqui o seu e-mail</Modal.Header>
+
+        <Modal.Body>
+          <Text mb={4}>Enviaremos um link para redefinir sua senha</Text>
+
+          <Input
+            bg='gray.600'
+            borderColor='gray.400'
+            onChangeText={setEmail}
+            placeholder='E-mail'
+            keyboardType='email-address'
+          />
+        </Modal.Body>
+
+        <Modal.Footer>
+          <Button w='full' size='md' onPress={() => onSubmit(email)}>
+            Enviar
+          </Button>
+        </Modal.Footer>
+      </Modal.Content>
+    </Modal>
   )
 }
